@@ -39,22 +39,35 @@ def splash(w):
 
     # TODO: Add code here.
 
-    playButton(w)
-    quitButton(w)
-    banner(w)
+    # We make function calls creating shapes and text return said things,
+    # so that we can undraw them later
+
+    play_button, play_text = playButton(w)
+    quit_button, quit_text = quitButton(w)
+    banner_text = banner(w)
     Ec = Easter(w)
-    egg(w, Ec)
-
-
-
-
-
-
-
-
-
-
-
+    
+    buttons = [play_button, quit_button, Ec, play_text, quit_text, banner_text]
+    
+    # loop until a function call makes something else happen
+    while True:
+        clicked_button = get_clicked_button(w, buttons)
+        
+        # get_clicked_button returns -1 if no button was clicked
+        if clicked_button == -1:
+            continue
+        
+        # button id 6 is the easter egg button :))))
+        if clicked_button.id == 6:
+            random_button_color(clicked_button)
+        if clicked_button.id == 1:
+            for button in buttons:
+            	button.undraw()
+            fade(w)
+            # break out of the while loop so that the function can return
+            # and we can execute game()
+            break
+            
 
     # Make use of the functions from utils.py as part of your solution.
 
@@ -67,7 +80,6 @@ def splash(w):
     #       text.
     #    4) Create (and return) a tuple with the quit button rectangle
     #       and text.
-
 
 
 def makeHero(p):

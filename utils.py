@@ -49,18 +49,26 @@ def Easter(w):
     Ec.draw(w)
     return Ec
 
-
-
-def egg(w, c):
-    p = w.getMouse()
-    print ("egg1")
-    x = inCircle(p, c)
-    print (x)
-    print ("egg2")
-    if  inCircle == True:
-        randomColorFill(c)
-
-
+# Loop over buttons and return the shape object of the clicked button
+def get_clicked_button(w, buttons):
+	p = w.getMouse()
+	
+	for button in buttons:
+	    # if gettting button.radius fail, button is not a circle
+	    # so it should be a rectangle
+		try:
+			x = button.radius
+			if inCircle(p, button):
+				return button
+		except Exception as e:
+			if inRectangle(p, button):
+				return button
+	#return -1 if no button was clicked			
+	return -1
+	
+#Change the color of shape c to a random color.
+def random_button_color(c):
+	randomColorFill(c)
 
 def inCircle(p, c):
     "p = musens koordinater"
@@ -95,6 +103,8 @@ def playButton(w):
 
     play = Text(Point(150, 300), "Play")
     play.draw(w)
+    
+    return p, play
 
 def quitButton(w):
     r = Rectangle(Point(300, 350), Point(400, 250))
@@ -103,6 +113,8 @@ def quitButton(w):
 
     quit = Text(Point(350, 300), "Quit")
     quit.draw(w)
+    
+    return r, quit
 
 def banner(w):
     banner = Text(Point(250, 200),"The Hunger Games")
@@ -111,6 +123,7 @@ def banner(w):
     banner.setStyle("bold")
     banner.draw(w)
 
+    return banner
 
 
 
@@ -151,7 +164,7 @@ def grow(t):
 
 
 
-def fade(w):
+def fade(w, sleep_time=0.1, max_gray_val=40):
     """
     Argument(s):
       w :: graphical window.
@@ -173,26 +186,11 @@ def fade(w):
              'gray31', 'gray32', 'gray33', 'gray34', 'gray35',
              'gray36', 'gray37', 'gray38', 'gray39', 'gray40']
 
-    # TODO:
     n = 0
     while n < 40:
         w.setBackground(grays[n])
-        n + 1
-
-
-def inCircle(p, c):
-    """
-    Argument(s):
-      p :: Point
-      c :: Circle
-
-    Return value :: Bool
-      True if p is inside the circle c, otherwise False.
-    """
-
-    # TODO: Add code here.
-
-    return False # TODO: Change this.
+        sleep(sleep_time)
+        n += 1
 
 def inRectangle(p, r):
     """
